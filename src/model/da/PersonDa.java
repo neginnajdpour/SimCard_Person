@@ -48,10 +48,7 @@ public class PersonDa implements DataAccess<Person,Integer> {
         preparedStatement.executeUpdate();
     }
 
-    @Override
-    public void remove(Person person) throws Exception {
 
-    }
 
     @Override
     public Person findById(Integer id) throws Exception {

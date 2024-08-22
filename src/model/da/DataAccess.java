@@ -9,8 +9,6 @@ public interface DataAccess<T,I> extends AutoCloseable {
     void edit(T t) throws Exception;
     void remove(int Id) throws Exception;
 
-    void remove(Person person) throws Exception;
-
     T findById(I id) throws Exception;
 
     Integer findCountByPersonId(Integer personId) throws Exception;
