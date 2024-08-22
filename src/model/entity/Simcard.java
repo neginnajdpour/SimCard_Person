@@ -16,6 +16,5 @@ public class Simcard {
     private int id;
     private Operator operator;
     private String number;
-    private Person owner;
 
 }

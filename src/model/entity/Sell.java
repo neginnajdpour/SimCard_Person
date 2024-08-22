@@ -1,11 +1,12 @@
 package model.entity;
 
-import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -13,14 +14,16 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 
-public class Person {
-    private int id;
-    private String name;
-    private String family;
+public class Sell {
 
-    @Override
-    public String toString() {
-        return new Gson().toJson(this);
-    }
+    private int sellId;
+    private Person person;
+    private Simcard simcard;
+    private LocalDateTime sellDate;
+    private Double sellPrice;
+
+
+
+
 
 }

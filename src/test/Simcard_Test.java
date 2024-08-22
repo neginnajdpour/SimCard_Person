@@ -1,10 +1,9 @@
 package test;
 
+import controller.SimcardController;
 import model.da.PersonDa;
-import model.da.SimcardDa;
 import model.entity.Operator;
 import model.entity.Person;
-import model.entity.Simcard;
 
 public class Simcard_Test {
     public static void main(String[] args) {
@@ -17,17 +16,7 @@ public class Simcard_Test {
             throw new RuntimeException(e);
         }
 
-        Simcard simcard = new Simcard();
-        simcard.setOperator(Operator.MCI);
-        simcard.setNumber("09143177740");
-        simcard.setOwner(person);
-
-        try (SimcardDa simcardda = new SimcardDa()){
-            simcardda.save(simcard);
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        SimcardController.saveSimcard(Operator.valueOf("MCI"),"09144079809",person);
 
 
 

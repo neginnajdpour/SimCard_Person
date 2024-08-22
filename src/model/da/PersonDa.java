@@ -1,6 +1,7 @@
 package model.da;
 
 import model.entity.Person;
+import model.entity.Simcard;
 import model.utils.DBConnection;
 
 
@@ -8,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PersonDa implements DataAccess<Person,Integer> {
@@ -92,6 +94,11 @@ public class PersonDa implements DataAccess<Person,Integer> {
             persons.add(person);
         }
         return persons;
+    }
+
+    @Override
+    public List<Simcard> findByNumber(String number) throws Exception {
+        return Collections.emptyList();
     }
 
 

@@ -24,21 +24,19 @@ public class SimcardDa implements DataAccess <Simcard,Integer> {
     @Override
     public void save(Simcard simcard) throws Exception {
         connection = DBConnection.getInstance().getConnection();
-        preparedStatement = connection.prepareStatement("INSERT INTO SIMCARD_TBL(SIM_OPERATOR,SIM_NUMBER,OWNER_ID) VALUES (?,?,?)");
+        preparedStatement = connection.prepareStatement("INSERT INTO SIMCARD_TBL(SIM_OPERATOR,SIM_NUMBER) VALUES (?,?)");
         preparedStatement.setString(1, simcard.getOperator().name());
         preparedStatement.setString(2, simcard.getNumber());
-        preparedStatement.setInt(3, simcard.getOwner().getId());
         preparedStatement.executeUpdate();
     }
 
     @Override
     public void edit(Simcard simcard) throws Exception {
         connection = DBConnection.getInstance().getConnection();
-        preparedStatement = connection.prepareStatement("UPDATE SIMCARD_TBL SET OPERATOR = ? , SIM_NUMBER = ? , OWNER_ID = ?  WHERE ID = ?");
+        preparedStatement = connection.prepareStatement("UPDATE SIMCARD_TBL SET OPERATOR = ? , SIM_NUMBER = ?  WHERE ID = ?");
         preparedStatement.setString(1, String.valueOf(simcard.getOperator()));
         preparedStatement.setString(2, simcard.getNumber());
-        preparedStatement.setInt(3, simcard.getOwner().getId());
-        preparedStatement.setInt(4, simcard.getId());
+        preparedStatement.setInt(3, simcard.getId());
         preparedStatement.executeUpdate();
 
     }
@@ -71,13 +69,40 @@ public class SimcardDa implements DataAccess <Simcard,Integer> {
 
     @Override
     public Integer findCountByPersonId(Integer personId) throws Exception {
-        return 0;
+        connection = DBConnection.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement("SELECT COUNT(*) AS SIM_COUNT FROM SIMCARD_TBL WHERE OWNER_ID = ?");
+        preparedStatement.setInt(1, personId);
+        resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getInt("SIM_COUNT");
+        }
+        else
+            return 0;
     }
 
     @Override
     public List<Person> findByFamily(String family) throws Exception {
         return Collections.emptyList();
     }
+
+    @Override
+    public List<Simcard> findByNumber(String number) throws Exception {
+        connection = DBConnection.getInstance().getConnection();
+        preparedStatement = connection.prepareStatement("SELECT * FROM SIMCARD_TBL WHERE SIM_NUMBER = ?");
+        preparedStatement.setString(1, number);
+        resultSet = preparedStatement.executeQuery();
+        List<Simcard> simcards = new ArrayList<>();
+        while (resultSet.next()) {
+            Simcard simcard = new Simcard();
+            simcard.setId(resultSet.getInt("ID"));
+            simcard.setOperator(Operator.valueOf(resultSet.getString("SIM_OPERATOR")));
+            simcard.setNumber(resultSet.getString("SIM_NUMBER"));
+            simcards.add(simcard);
+        }
+
+        return simcards;
+    }
+
 
     @Override
     public List<Simcard> findAll() throws Exception {
