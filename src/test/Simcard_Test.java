@@ -19,7 +19,7 @@ public class Simcard_Test {
 
         Simcard simcard = new Simcard();
         simcard.setOperator(Operator.MCI);
-        simcard.setNumber("09143148516");
+        simcard.setNumber("09143177740");
         simcard.setOwner(person);
 
         try (SimcardDa simcardda = new SimcardDa()){
